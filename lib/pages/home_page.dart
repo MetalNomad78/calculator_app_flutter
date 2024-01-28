@@ -23,6 +23,28 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 100,
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        flexibleSpace: ClipPath(
+          clipper: _CustomClipper(),
+          child: Container(
+            color: Colors.grey[900],
+            child: const Center(
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Image(
+                  width: 250,
+                    image: AssetImage(
+                        'lib/logo.png',
+                    )
+                )
+              ),
+            ),
+          ),
+        ),
+      ),
       backgroundColor: Colors.black,
       body: Column(
         children: [
@@ -159,5 +181,26 @@ class _HomePageState extends State<HomePage> {
     double eval = exp.evaluate(EvaluationType.REAL, cm);
     userAnswer=eval.toString();
 
+  }
+}
+class _CustomClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    double height = size.height;
+    double width = size.width;
+
+    var path = Path();
+
+    path.lineTo(0, height - 50);
+    path.quadraticBezierTo(width / 2, height, width, height - 50);
+    path.lineTo(width, 0);
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return true;
   }
 }
